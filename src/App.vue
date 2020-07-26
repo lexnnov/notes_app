@@ -1,5 +1,8 @@
 <template>
     <div id="app">
+
+        <Dialog @remove="confirmRemove" @closeModal="closeModal"/>
+
         <transition name="fade" mode="out-in">
             <router-view :key="$route.fullPath"></router-view>
         </transition>
@@ -8,8 +11,26 @@
 
 <script>
 
+	import Dialog from '@/components/Dialog/Dialog';
+
 	export default {
-		name: 'App'
+		name: 'App',
+		components: { Dialog },
+		computed: {
+			removeId() {
+				return this.$store.state.noteIdForRemove
+            }
+        },
+		methods: {
+			closeModal() {
+				this.$store.dispatch('setModal', {modalOpen: false})
+			},
+			confirmRemove() {
+				this.$store.dispatch('removeNote', this.removeId)
+				this.$store.dispatch('setModal', {modalOpen: false})
+				this.$router.push('/')
+			},
+		}
 	}
 </script>
 
@@ -50,7 +71,7 @@
         max-width: 640px;
         margin: 0 auto;
 
-         & > button {
+        & > button {
             background-color: #009688;
             margin-bottom: 20px;
             color: white;

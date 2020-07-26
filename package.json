@@ -25,9 +25,7 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^9.0.2",
     "vue-svg-loader": "^0.16.0",
-    "vue-template-compiler": "^2.6.11",
-    "vue-undo-redo-stack": "^1.0.0",
-    "vuex-undo-redo": "^1.1.4"
+    "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
     "root": true,

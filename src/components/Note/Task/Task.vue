@@ -25,7 +25,7 @@
 </template>
 
 <script>
-	import SomeIcon from '@/assets/cancel.svg'
+	import SomeIcon from '@/assets/remove.svg'
 
 	export default {
 		name: 'Task',

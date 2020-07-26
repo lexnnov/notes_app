@@ -1,18 +1,25 @@
 <template>
     <transition name="fade">
-        <div class="dialog" v-if="modal">
+        <div class="dialog" v-if="modalData.modalOpen">
             <div class="wrap">
                 <div class="header">
                     <p>
-                        {{modalData.title}}
+                        {{modalData.data.title}}
                     </p>
                 </div>
                 <div class="content">
-                    {{modalData.content}}
+                    {{modalData.data.content}}
                 </div>
                 <div class="footer">
-                    <Button v-for="control in modalData.controls" :key="control" :title="control"
-                            :onClick=" control == 'CANCEL' ? cancel : control == 'REMOVE' ? remove : ok  "/>
+                    <Button
+                            v-for="control in modalData.data.controls"
+                            :key="control"
+                            :title="control"
+                            :onClick="
+                        control == 'CANCEL' ? cancel :
+                        control == 'REMOVE' ? remove :
+                         ok "
+                    />
 
                 </div>
             </div>
@@ -25,46 +32,23 @@
 
 	export default {
 
-
 		name: 'Dialog',
 		components: { Button },
 
-		props: {
-			isOpen: {
-				type: Boolean
-			},
-			type: {
-				type: String
-			}
-		},
-
 		computed: {
-			modal: {
-				get() {
-					return this.$store.getters.getModal
-				},
-				set() {
-				}
-			},
-			modalData: {
-				get() {
-					return this.$store.state.dialog
-				},
-				set() {
-				}
+			modalData() {
+				return this.$store.state.modal
 			}
 		},
 		methods: {
 			cancel() {
-				this.$store.dispatch('updateModal', false)
+				this.$emit('closeModal')
 			},
 			ok() {
-				if (this.modalData.route) {
+				if (this.modalData.route)
 					this.$router.push(this.modalData.route)
-					this.$store.dispatch('updateModal', false)
-				} else {
-					this.$store.dispatch('updateModal', false)
-				}
+
+				this.$emit('closeModal')
 			},
 			remove() {
 				this.$emit('remove')

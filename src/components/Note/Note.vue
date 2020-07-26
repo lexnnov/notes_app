@@ -1,7 +1,7 @@
 <template>
     <div :class="[readonly ? 'note readOnly' : 'note']">
         <div class="title">
-            <input placeholder="Note title" :disabled="readonly" v-model="note.title"
+            <input @input="inputChange" placeholder="Note title" :disabled="readonly" v-model="note.title"
                    type="text"/>
         </div>
 
@@ -82,13 +82,13 @@
 
 		methods: {
 
+			// Работа с заметкой
 			editNote() {
 				this.$emit('editNote', this.note)
 			},
 			viewNote() {
 				this.$emit('viewNote', this.note)
 			},
-
 			createNote() {
 				this.$emit('createNote')
 			},
@@ -99,6 +99,7 @@
 				this.$emit('removeNote', this.note.id)
 			},
 
+			// Работа с задачами
 			addTask() {
 				this.$emit('addTask', this.note.id)
 			},
@@ -106,11 +107,16 @@
 				this.$emit('removeTask', task)
 			},
 
+			// Функции отмены изменений
 			undo() {
-				this.$emit('undo', this.$store.getters.getUndo)
+				this.$emit('undo', this.canUndo)
 			},
 			redo() {
-				this.$emit('redo', this.$store.getters.getRedo)
+				this.$emit('redo', this.canRedo)
+			},
+
+			inputChange() {
+				this.$emit('inputChange', this.canRedo)
 			}
 		}
 	}

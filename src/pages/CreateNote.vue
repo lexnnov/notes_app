@@ -1,6 +1,5 @@
 <template>
     <div class="container">
-        <Dialog/>
 
         <Button :onClick="goHome" title="BACK TO NOTES"/>
 
@@ -22,11 +21,10 @@
 	import Button from '@/components/Button/Button'
 	import Note from '@/components/Note/Note'
 	import { generateId } from '@/helpers'
-	import Dialog from '@/components/Dialog/Dialog';
 
 	export default {
 		name: 'CreateNote',
-		components: { Dialog, Note, Button },
+		components: { Note, Button },
 		data: function () {
 			return {
 				note: {
@@ -37,17 +35,20 @@
 		},
 		methods: {
 			createNote() {
+				// Проверка на наличие title и хотя бы одной задачи
 				if (this.note.title && this.note.tasks.length) {
 					this.$store.dispatch('createNote', { id: generateId(), title: this.note.title, tasks: this.note.tasks })
 					this.$router.push('/')
 				} else {
-					this.$store.dispatch('setDialog', {
-						title: 'All fields must be filled',
-						content: 'To create a note, you need to fill in the title and add a task',
-						route: '',
-						controls: [ 'OK' ]
+					this.$store.dispatch('setModal', {
+						modalOpen: true,
+						data: {
+							title: 'All fields must be filled',
+							content: 'To create a note, you need to fill in the title and add a task',
+							route: '',
+							controls: [ 'OK' ]
+						}
 					})
-					this.$store.dispatch('updateModal', true)
 				}
 			},
 			addTask() {
@@ -55,12 +56,12 @@
 			},
 			removeTask(removeTask) {
 				this.note.tasks = this.note.tasks.filter(task => task.id !== removeTask.id)
+				this.$store.dispatch('setNoteIdForRemove', removeTask.id)
 			},
 			goHome() {
 				this.$router.push('/')
 			}
 		}
-
 	}
 </script>
 
