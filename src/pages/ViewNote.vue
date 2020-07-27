@@ -1,7 +1,7 @@
 <template>
     <div class="container">
 
-        <Button :onClick="goHome" title="BACK TO NOTES"/>
+        <btn :onClick="goHome" title="BACK TO NOTES"/>
 
         <note
             :note="note"
@@ -15,12 +15,12 @@
 </template>
 
 <script>
-	import Button from '@/components/Button/Button';
+	import Btn from '@/components/Btn/Btn';
 	import Note from '@/components/Note/Note';
 
 	export default {
 		name: 'ViewNote',
-		components: { Note, Button },
+		components: { Note, Btn },
 		data() {
 			return {
 				note: {
@@ -32,7 +32,7 @@
 
 		mounted() {
 			this.$store.dispatch('init');
-			this.note = this.$store.state.notes.find(el => el.id == this.$route.params.id)
+			this.note = this.$store.getters.getNotes.find(el => el.id == this.$route.params.id)
 		},
 
 		methods: {

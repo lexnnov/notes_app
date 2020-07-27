@@ -1,16 +1,16 @@
 <template>
     <div class="container">
 
-        <Button :onClick="goHome" title="BACK TO NOTES"/>
+        <btn :onClick="goHome" title="BACK TO NOTES"/>
 
         <div class="notes">
             <note
-                    :note="note"
-                    :readonly="false"
-                    :controls="['ADD TASK', 'CREATE']"
-                    @removeTask="removeTask"
-                    @addTask="addTask"
-                    @createNote="createNote"
+                :note="note"
+                :readonly="false"
+                :controls="['ADD TASK', 'CREATE']"
+                @removeTask="removeTask"
+                @addTask="addTask"
+                @createNote="createNote"
             />
         </div>
     </div>
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-	import Button from '@/components/Button/Button'
+	import Btn from '@/components/Btn/Btn'
 	import Note from '@/components/Note/Note'
 	import { generateId } from '@/helpers'
 
 	export default {
 		name: 'CreateNote',
-		components: { Note, Button },
+		components: { Note, Btn },
 		data: function () {
 			return {
 				note: {

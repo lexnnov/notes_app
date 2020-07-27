@@ -1,32 +1,32 @@
 <template>
     <div class="container">
 
-        <Button :onClick="goHome" title="BACK TO NOTES"/>
+        <btn :onClick="goHome" title="BACK TO NOTES"/>
 
         <note
-                :note="note"
-                :readonly="false"
-                :controls="['REMOVE','ADD TASK', 'UNDO', 'REDO', 'SAVE']"
-                @saveNote="saveNote"
-                @removeNote="removeNote"
-                @removeTask="removeTask"
-                @addTask="addTask"
-                @inputChange="inputChange"
-                @undo="undo"
-                @redo="redo"
+            :note="note"
+            :readonly="false"
+            :controls="['REMOVE','ADD TASK', 'UNDO', 'REDO', 'SAVE']"
+            @saveNote="saveNote"
+            @removeNote="removeNote"
+            @removeTask="removeTask"
+            @addTask="addTask"
+            @inputChange="inputChange"
+            @undo="undo"
+            @redo="redo"
         />
     </div>
 
 </template>
 
 <script>
-	import Button from '@/components/Button/Button';
+	import Btn from '@/components/Btn/Btn';
 	import Note from '@/components/Note/Note';
 	import { generateId } from '@/helpers';
 
 	export default {
 		name: 'EditNote',
-		components: { Note, Button },
+		components: { Note, Btn },
 		data() {
 			return {
 				note: {
@@ -45,12 +45,11 @@
 		},
 		mounted() {
 			this.$store.dispatch('init');
-			this.note = this.$store.state.notes.find(el => el.id == this.$route.params.id)
+			this.note = this.$store.getters.getNotes.find(el => el.id == this.$route.params.id)
 			this.noteCopies[ 0 ] = { ...this.note }
 		},
 
 		methods: {
-
 			goHome() {
 				this.$store.dispatch('setModal', {
 					modalOpen: true, data: {

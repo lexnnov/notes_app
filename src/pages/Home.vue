@@ -1,18 +1,18 @@
 <template>
     <div class="container">
 
-        <Button :onClick="addNote" title="ADD NOTE"/>
+        <btn :onClick="addNote" title="ADD NOTE"/>
 
         <div class="notes" v-if="notes.length">
             <note
-                    v-for="note in notes"
-                    :key="note.id"
-                    :note="note"
-                    :readonly="true"
-                    :controls="['REMOVE', 'VIEW', 'EDIT']"
-                    @removeNote="removeNote"
-                    @editNote="editNote"
-                    @viewNote="viewNote"
+                v-for="note in notes"
+                :key="note.id"
+                :note="note"
+                :readonly="true"
+                :controls="['REMOVE', 'VIEW', 'EDIT']"
+                @removeNote="removeNote"
+                @editNote="editNote"
+                @viewNote="viewNote"
             />
         </div>
 
@@ -22,22 +22,18 @@
 
 <script>
 	import Note from '@/components/Note/Note'
-	import Button from '@/components/Button/Button'
+	import Btn from '@/components/Btn/Btn'
 
 	export default {
 		name: 'Home',
-		components: { Button, Note },
-		data: function () {
-			return {
-				idNoteForRemove: ''
-			}
-		},
+		components: { Btn, Note },
+
 		mounted() {
 			this.$store.dispatch('init');
 		},
 		computed: {
 			notes() {
-				return this.$store.state.notes
+				return this.$store.getters.getNotes
 			}
 		},
 		methods: {

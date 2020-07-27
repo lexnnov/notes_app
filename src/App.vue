@@ -1,7 +1,7 @@
 <template>
     <div id="app">
 
-        <Dialog @remove="confirmRemove" @closeModal="closeModal"/>
+        <Modal @remove="confirmRemove" @closeModal="closeModal"/>
 
         <transition name="fade" mode="out-in">
             <router-view :key="$route.fullPath"></router-view>
@@ -11,14 +11,14 @@
 
 <script>
 
-	import Dialog from '@/components/Dialog/Dialog';
+	import Modal from '@/components/Modal/Modal';
 
 	export default {
 		name: 'App',
-		components: { Dialog },
+		components: { Modal },
 		computed: {
 			removeId() {
-				return this.$store.state.noteIdForRemove
+				return this.$store.getters.getNoteIdForRemove
             }
         },
 		methods: {
@@ -29,7 +29,7 @@
 				this.$store.dispatch('removeNote', this.removeId)
 				this.$store.dispatch('setModal', {modalOpen: false})
 				this.$router.push('/')
-			},
+			}
 		}
 	}
 </script>
