@@ -75,6 +75,10 @@
             background-color: #009688;
             margin-bottom: 20px;
             color: white;
+
+            &:hover {
+                background-color: #05c7b5;
+            }
         }
     }
 </style>
